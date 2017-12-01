@@ -13,13 +13,13 @@ dotnet publish -c Release --output obj/Docker/publish/ebss ./ExpressBase.Service
 docker build -t us.gcr.io/avian-silo-186815/ebweb:$TAG ./ExpressBase.Web/.
 docker build -t us.gcr.io/avian-silo-186815/ebss:$TAG ./ExpressBase.ServiceStack/.
 
-docker tag us.gcr.io/avian-silo-186815/ebweb:$TAG us.gcr.io/avian-silo-186815/ebweb:latest
-docker tag us.gcr.io/avian-silo-186815/ebss:$TAG us.gcr.io/avian-silo-186815/ebss:latest
+docker tag asia.gcr.io/avian-silo-186815/ebweb:$TAG asia.gcr.io/avian-silo-186815/ebweb:latest
+docker tag asia.gcr.io/avian-silo-186815/ebss:$TAG asia.gcr.io/avian-silo-186815/ebss:latest
 
 # Login to Docker Hub and upload images
-docker login -u oauth2accesstoken -p $DOCKER_PASSWORD
+docker login -u oauth2accesstoken -p "$DOCKER_PASSWORD"
 
-docker push us.gcr.io/avian-silo-186815/ebweb:$TAG
-docker push us.gcr.io/avian-silo-186815/ebss:$TAG
-docker push us.gcr.io/avian-silo-186815/ebweb:latest
-docker push us.gcr.io/avian-silo-186815/ebss:latest
+docker push asia.gcr.io/avian-silo-186815/ebweb:$TAG
+docker push asia.gcr.io/avian-silo-186815/ebss:$TAG
+docker push asia.gcr.io/avian-silo-186815/ebweb:latest
+docker push asia.gcr.io/avian-silo-186815/ebss:latest
