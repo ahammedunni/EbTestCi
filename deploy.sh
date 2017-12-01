@@ -17,9 +17,9 @@ docker tag asia.gcr.io/avian-silo-186815/ebweb:$TAG asia.gcr.io/avian-silo-18681
 docker tag asia.gcr.io/avian-silo-186815/ebss:$TAG asia.gcr.io/avian-silo-186815/ebss:latest
 
 # Login to Docker Hub and upload images
-docker login -u oauth2accesstoken -p "$DOCKER_PASSWORD"
+# docker login -u oauth2accesstoken -p "$DOCKER_PASSWORD"
 
-docker push asia.gcr.io/avian-silo-186815/ebweb:$TAG
-docker push asia.gcr.io/avian-silo-186815/ebss:$TAG
-docker push asia.gcr.io/avian-silo-186815/ebweb:latest
-docker push asia.gcr.io/avian-silo-186815/ebss:latest
+# docker push asia.gcr.io/avian-silo-186815/ebweb:$TAG
+# docker push asia.gcr.io/avian-silo-186815/ebss:$TAG
+# docker push asia.gcr.io/avian-silo-186815/ebweb:latest
+# docker push asia.gcr.io/avian-silo-186815/ebss:latest
