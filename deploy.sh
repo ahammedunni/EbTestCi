@@ -6,8 +6,8 @@ DOCKER_USERNAME=$2
 DOCKER_PASSWORD=$3
 
 # Create publish artifact
-dotnet publish -c Release --output ../obj/Docker/publish/ebweb ./ExpressBase.Web/ExpressBase.Web.csproj
-dotnet publish -c Release --output ../obj/Docker/publish/ebss ./ExpressBase.ServiceStack/ExpressBase.ServiceStack.csproj
+dotnet publish -c Release --output obj/Docker/publish/ebweb ./ExpressBase.Web/ExpressBase.Web.csproj
+dotnet publish -c Release --output obj/Docker/publish/ebss ./ExpressBase.ServiceStack/ExpressBase.ServiceStack.csproj
 
 # Build the Docker images
 docker build -t us.gcr.io/avian-silo-186815/ebweb:$TAG ./ExpressBase.Web/.
