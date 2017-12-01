@@ -6,9 +6,8 @@ matrix:
     - os: linux # Ubuntu 16.04
       dist: trusty
       sudo: required
-      mono: none
+      mono: 5.4.1
       dotnet: 2.0.0
-      nuget: 4.4.1
 
 before_script:
   - chmod a+x ./build.sh
