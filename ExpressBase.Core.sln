@@ -13,10 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpressBase.ServiceStack", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpressBase.Web", "ExpressBase.Web\ExpressBase.Web.csproj", "{D06525A1-ECA1-451D-9F64-39544D0F8918}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpressBase.Utils", "utils\ExpressBase.Utils.csproj", "{58245716-2742-41A9-8985-00E3356965BA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbUnniSlack", "EbUnniSlack\EbUnniSlack.csproj", "{17DAC999-9CDC-4149-97AF-FECA3C160D14}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
