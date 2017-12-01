@@ -1,0 +1,424 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    @using ExpressBase.Common;
+    var ds = EbSerializers.Json_Serialize(ViewBag.dsObj);
+}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css " />@*Dona*@
+<title>Code editor</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="~/lib/codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="~/lib/codemirror/addon/hint/show-hint.css">
+<link rel="stylesheet" href="~/lib/codemirror/addon/fold/foldgutter.css" />
+<script src="~/lib/codemirror/lib/codemirror.js"></script>
+<script src="~/lib/codemirror/addon/hint/show-hint.js"></script>
+<script src="~/lib/codemirror/addon/hint/javascript-hint.js"></script>
+<script src="~/lib/codemirror/mode/javascript/javascript.js"></script>
+<script src="~/lib/codemirror/addon/hint/sql-hint.js"></script>
+<script src="~/lib/codemirror/mode/sql/sql.js"></script>
+<script src="~/lib/codemirror/addon/fold/foldcode.js"></script>
+<script src="~/lib/codemirror/addon/fold/foldgutter.js"></script>
+<script src="~/lib/codemirror/addon/fold/brace-fold.js"></script>
+<script src="~/lib/codemirror/addon/fold/xml-fold.js"></script>
+<script src="~/lib/codemirror/addon/fold/comment-fold.js"></script>
+<script src="~/lib/codemirror/mode/xml/xml.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        refid, ver_num, type, dsobj, cur_statu
+        var MyDs = new DataSource('@ViewBag.Refid' '@ViewBag.VersionNumber',@ViewBag.ObjType, @Html.Raw(ds), '@ViewBag.Status');
+
+        $("#loader").hide();
+        $('#filterRun').on('hidden.bs.modal', function () {
+            $("#sample").DataTable().destroy();
+            $("#sample").children().remove();
+        });
+        $("#close_paramdiv").click(function () {
+            $('#paramdiv').toggle();
+            $('#codewindow').removeClass("col-md-8");
+            $('#codewindow').addClass("col-md-10");
+        });
+    });
+    
+    @Html.Raw(ViewBag.Meta);
+    @Html.Raw(ViewBag.JsObjects);
+    @Html.Raw(ViewBag.EbObjectTypes);
+</script>
+<div class="row dshbrd">
+    <div>
+        @{
+            if (ViewBag.IsNew == "true")
+            {
+                @await Component.InvokeAsync("ObjectDashboardInitial", new { objid = ViewBag.Obj_id });
+            }
+            else
+            {
+                @await Component.InvokeAsync("ObjectDashboard", new { refid = ViewBag.Refid, objname = ViewBag.ObjectName, @*totVer = ViewBag.VersionNumber,*@ status = ViewBag.Status, desc = ViewBag.ObjectDesc, _readonly = ViewBag.ReadOnly, _type = ViewBag.ObjType, major = ViewBag.Majorv, minor = ViewBag.Minorv, patch = ViewBag.Patchv, workcopies = ViewBag.Workingcopy , _tags = ViewBag.Tags });
+            }
+        }
+    </div>
+</div>
+<div class="row codedit">
+    <ul class="nav nav-tabs versionNav" id="versionNav">
+        <li class="active"><a data-toggle="tab" class="cetab" href="#vernav0" data-verNum="@ViewBag.VersionNumber">v @ViewBag.VersionNumber</a></li>
+    </ul>
+    <div class="tab-content" id="versionTab">
+        <div id="vernav0" class="tab-pane fade in active code_edit" data-id="new">
+            <div id="paramdiv0" class="col-md-2" style="z-index:-1; padding:0px; height:100px; display:none">
+                <h6 class="smallfont" style="font-size: 12px;display:inline">Parameter Div</h6>
+                <button class='head-btn pull-right' id="close_paramdiv"><i class='fa fa-times' aria-hidden='true'></i></button>
+            </div>
+            <div class="col-md-10" id="codewindow0" style="margin:0;padding:0;">
+                <textarea id="code" name="code">@ViewBag.Code</textarea>
+            </div>
+            <div class="col-md-2">
+                <div id="dspropgrid0" class="pull-right" style="padding:0px"></div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<script>
+
+    window.onload = function () {
+        CodeMirror.commands.autocomplete = function(cm)
+        {
+            CodeMirror.showHint(cm, @ViewBag.EditorHint);
+        };
+
+        var _readonly = '@ViewBag.VersionNumber'.slice(-1);
+        if (_readonly === "w" ||'@ViewBag.IsNew'==="True")
+            _readonly = false;
+        else
+            _readonly = true;
+
+        window.editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            mode: "@ViewBag.EditorMode",
+            lineNumbers: true,
+            lineWrapping: false,
+            extraKeys: { "Ctrl-Space": "autocomplete" },
+            autoRefresh: true,
+            readOnly:_readonly,
+            foldGutter: { rangeFinder: new CodeMirror.fold.combine(CodeMirror.fold.brace, CodeMirror.fold.comment) },
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+        });
+        var orig = CodeMirror.hint.sql;
+        CodeMirror.hint.sql = function (editor) {
+            var inner = orig(editor) || {from: editor.getCursor(), to: editor.getCursor(), list: []};
+            var SqlFnList = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.SqlFns));
+            $.each(SqlFnList, function (i, fdj) {
+                inner.list.push(fdj);
+            });
+            var cursor = editor.getCursor();
+            var currentLine = editor.getLine(cursor.line);
+            var start = cursor.ch;
+            var end = start;
+            while (end < currentLine.length && /[\w$]+/.test(currentLine.charAt(end))) ++end;
+            while (start && /[\w$]+/.test(currentLine.charAt(start - 1))) --start;
+            var curWord = start != end && currentLine.slice(start, end);
+            var regex = new RegExp('^' + curWord, 'i');
+            var result = {
+                list: (!curWord ? inner.list : inner.list.filter(function (item) {
+                    return item.match(regex);
+                })).sort(),
+                from: CodeMirror.Pos(cursor.line, start),
+                to: CodeMirror.Pos(cursor.line, end)
+            };
+
+            return result;
+        };
+        //    CodeMirror.commands["selectAll"](editor);
+
+        //    function getSelectedRange() {
+        //        return { from: editor.getCursor(true), to: editor.getCursor(false) };
+        //    }
+
+        //    function autoFormatSelection() {
+        //        var range = getSelectedRange();
+        //        editor.autoFormatRange(range.from, range.to);
+        //    }
+
+        //    function commentSelection(isComment) {
+        //        var range = getSelectedRange();
+        //        alert(range);
+        //        alert(isComment);
+        //        editor.commentRange(isComment, range.from, range.to);
+        //    }
+        //    $('#comment').on('click',function(){
+        //        commentSelection(true);
+        //    })
+        //    CodeMirror.extendMode("css", {
+        //        commentStart: "/*",
+        //        commentEnd: "*/",
+        //        newlineAfterToken: function(type, content) {
+        //            return /^[;{}]$/.test(content);
+        //        }
+        //    });
+
+        //    CodeMirror.extendMode("javascript", {
+        //        commentStart: "/*",
+        //        commentEnd: "*/",
+        //        // FIXME semicolons inside of for
+        //        newlineAfterToken: function(type, content, textAfter, state) {
+        //            if (this.jsonMode) {
+        //                return /^[\[,{]$/.test(content) || /^}/.test(textAfter);
+        //            } else {
+        //                if (content == ";" && state.lexical && state.lexical.type == ")") return false;
+        //                return /^[;{}]$/.test(content) && !/^;/.test(textAfter);
+        //            }
+        //        }
+        //    });
+
+        //    CodeMirror.extendMode("xml", {
+        //        commentStart: "<!--",
+        //        commentEnd: "-->",
+        //        newlineAfterToken: function(type, content, textAfter) {
+        //            return type == "tag" && />$/.test(content) || /^</.test(textAfter);
+        //        }
+        //    });
+
+        //    // Comment/uncomment the specified range
+        //    CodeMirror.defineExtension("commentRange", function (isComment, from, to) {
+        //        var cm = this, curMode = CodeMirror.innerMode(cm.getMode(), cm.getTokenAt(from).state).mode;
+        //        cm.operation(function() {
+        //            if (isComment) { // Comment range
+        //                cm.replaceRange(curMode.commentEnd, to);
+        //                cm.replaceRange(curMode.commentStart, from);
+        //                if (from.line == to.line && from.ch == to.ch) // An empty comment inserted - put cursor inside
+        //                    cm.setCursor(from.line, from.ch + curMode.commentStart.length);
+        //            } else { // Uncomment range
+        //                var selText = cm.getRange(from, to);
+        //                var startIndex = selText.indexOf(curMode.commentStart);
+        //                var endIndex = selText.lastIndexOf(curMode.commentEnd);
+        //                if (startIndex > -1 && endIndex > -1 && endIndex > startIndex) {
+        //                    // Take string till comment start
+        //                    selText = selText.substr(0, startIndex)
+        //                    // From comment start till comment end
+        //                      + selText.substring(startIndex + curMode.commentStart.length, endIndex)
+        //                    // From comment end till string end
+        //                      + selText.substr(endIndex + curMode.commentEnd.length);
+        //                }
+        //                cm.replaceRange(selText, from, to);
+        //            }
+        //        });
+        //    });
+
+        //    // Applies automatic mode-aware indentation to the specified range
+        //    CodeMirror.defineExtension("autoIndentRange", function (from, to) {
+        //        var cmInstance = this;
+        //        this.operation(function () {
+        //            for (var i = from.line; i <= to.line; i++) {
+        //                cmInstance.indentLine(i, "smart");
+        //            }
+        //        });
+        //    });
+
+        //    // Applies automatic formatting to the specified range
+        //    CodeMirror.defineExtension("autoFormatRange", function (from, to) {
+        //        var cm = this;
+        //        var outer = cm.getMode(), text = cm.getRange(from, to).split("\n");
+        //        var state = CodeMirror.copyState(outer, cm.getTokenAt(from).state);
+        //        var tabSize = cm.getOption("tabSize");
+
+        //        var out = "", lines = 0, atSol = from.ch == 0;
+        //        function newline() {
+        //            out += "\n";
+        //            atSol = true;
+        //            ++lines;
+        //        }
+
+        //        for (var i = 0; i < text.length; ++i) {
+        //            var stream = new CodeMirror.StringStream(text[i], tabSize);
+        //            while (!stream.eol()) {
+        //                var inner = CodeMirror.innerMode(outer, state);
+        //                var style = outer.token(stream, state), cur = stream.current();
+        //                stream.start = stream.pos;
+        //                if (!atSol || /\S/.test(cur)) {
+        //                    out += cur;
+        //                    atSol = false;
+        //                }
+        //                if (!atSol && inner.mode.newlineAfterToken &&
+        //                    inner.mode.newlineAfterToken(style, cur, stream.string.slice(stream.pos) || text[i+1] || "", inner.state))
+        //                    newline();
+        //            }
+        //            if (!stream.pos && outer.blankLine) outer.blankLine(state);
+        //            if (!atSol) newline();
+        //        }
+
+        //        cm.operation(function () {
+        //            cm.replaceRange(out, from, to);
+        //            for (var cur = from.line + 1, end = from.line + lines; cur <= end; ++cur)
+        //                cm.indentLine(cur, "smart");
+        //            cm.setSelection(from, cm.getCursor(false));
+        //        });
+        //    });
+    };
+</script>
+
+<style>
+    .btn-group > .btn:first-child {
+        margin-left: 0px !important;
+    }
+
+    .CodeMirror {
+        background-color: #dceae5;
+        border: 1px solid #cccccc;
+    }
+
+    .table-responsive {
+        overflow-x: inherit;
+    }
+
+    .controls-group {
+        overflow-y: inherit;
+    }
+
+    .fd_top_content {
+        margin-bottom: 10px;
+    }
+
+    #obj_desc {
+        height: 46px;
+    }
+    /*.codeEditLabel {
+            padding-top: 9px;
+            padding-bottom: 10px;
+        }*/
+    .dropdown {
+        position: relative;
+        margin-right: -6px;
+    }
+
+    .verlist {
+        width: 140px;
+    }
+
+    .inner_toolbar {
+        border: 0px;
+    }
+
+    /*differ styles*/
+
+    #diffBar {
+        width: 3%;
+        height: 100%;
+        float: left;
+        position: relative;
+        background: #DDDDDD;
+    }
+
+    .diffBarLineLeft, .diffBarLineRight {
+        width: 50%;
+        float: left;
+        height: 0px;
+        cursor: pointer;
+    }
+
+    .inView {
+        background-repeat: repeat;
+    }
+
+    #activeBar {
+        position: absolute;
+        top: 0px;
+        background-color: #6699FF;
+        opacity: 0.5;
+        filter: alpha(opacity= '50');
+    }
+
+
+    #diffBox {
+        margin-left: auto;
+        margin-right: auto;
+        border: solid 2px #000000;
+    }
+
+
+    .leftPane, .rightPane {
+        float: left;
+        width: 50%;
+        font-family: monospace;
+        height: 400px;
+        color: black;
+        overflow-x: scroll;
+    }
+
+    .diffHeader {
+        font-weight: bold;
+        padding: 2px 0px 2px 10px;
+        background-color: #FFFFFF;
+        text-align: center;
+    }
+
+    .diffPane {
+        margin-right: 0px;
+        padding: 0px;
+        overflow-y: scroll;
+        font-family: Consolas;
+        font-size: xx-small;
+    }
+
+    .line {
+        padding-left: .2em;
+        white-space: nowrap;
+        width: 50%;
+    }
+
+    .lineNumber {
+        padding: 0 .3em;
+        background-color: #FFFFFF;
+        text-align: right;
+    }
+
+    .InsertedLine {
+        background-color: lightgreen;
+    }
+
+    .ModifiedLine {
+        background-color: lightyellow;
+    }
+
+    .DeletedLine {
+        background-color: lightpink;
+    }
+
+    .UnchangedLine {
+        background-color: #FFFFFF;
+    }
+
+    .ImaginaryLine {
+        background-color: #C8C8C8;
+    }
+
+    .InsertedCharacter {
+        background-color: palegreen;
+    }
+
+    .DeletedCharacter {
+        background-color: hotpink;
+    }
+
+    .UnchangedCharacter {
+    }
+
+    .ImaginaryCharacter {
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    #oldtext .diffTable {
+        width: 50%;
+        height: 50%;
+        padding-left: 0px;
+        overflow-y: scroll;
+    }
+
+    #newtext .diffTable {
+        width: 50%;
+        height: 50%;
+        padding-right: 0px;
+        overflow-y: scroll;
+    }
+</style>

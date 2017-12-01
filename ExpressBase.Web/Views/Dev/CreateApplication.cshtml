@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+    //  @Html.AntiForgeryToken()
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">           
+                alert("@ViewBag.Message");
+       
+        </script>
+    }
+<div class="col-md-4 col-md-offset-4" style="margin-top: 115px">
+    <h3 class="text-center">Create Application</h3>
+    <div class="form-group">
+        <input type="text" class="form-control" id="applicationname" name="applicationname" placeholder="Application Name" value="@ViewBag.applicationname"/>
+    </div>
+    <div class="form-group">
+        <textarea name="description" id="description" placeholder="description" class="form-control">@ViewBag.description</textarea>
+    </div>
+   
+    <div class="form-group pull-right">
+        <input type="button" class="btn btn-primary" id="sub" value="Create" />
+        <input type="hidden" id="itemid" name="itemid" value="@ViewBag.Obj_id" />
+    </div>
+</div>
+<script>
+    $('document').ready(function () {
+        $('#sub').click(function () {
+            $.post("../Dev/SaveApplications",
+                {
+                    "applicationname": $('#applicationname').val(),
+                    "description": $('#description').val(),
+                    "itemid": $('#itemid').val()
+                },function (result) {
+                });
+        });
+    });
+</script>
+@*<script>
+    $('document').ready(function () {
+        var f = true;
+        $('.selectpicker').on('rendered.bs.select', function (e) {
+            if (f)
+                $("#obj").find("span:eq(0)").text("Select Objects")
+            f = false;
+        });
+    });
+</script>*@

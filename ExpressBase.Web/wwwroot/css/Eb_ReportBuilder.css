@@ -1,0 +1,639 @@
+﻿/*side menuBar*/
+.tool-box-items {
+    margin-left: 0px !important;
+    margin-top: 2px !important;
+}
+.tree, .tree ul {
+    padding: 0;
+    list-style: none;
+}
+.tree ul {
+        margin-left: 1em;
+        position: relative;
+    }
+      .tree ul ul {
+            margin-left: .5em;
+        }
+        .tree ul:before {
+            content: "";
+            display: block;
+            width: 0;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            border-left: 1px solid;
+        }
+    .tree li {
+        margin: 0;
+        padding: 0 4%;
+        line-height: 2em;
+        font-weight: 300;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .tree ul li:before {
+        content: "";
+        display: block;
+        width: 21px;
+        height: 0;
+        border-top: 1px solid;
+        margin-top: -1px;
+        position: absolute;
+        top: 1em;
+        left: 0;
+    }
+    .tree ul li:last-child:before {
+        background: #fff;
+        height: auto;
+        top: 1em;
+        bottom: 0;
+    }
+
+.tree li a {
+    text-decoration: none;
+    font-size: 13px;
+    color: #444;
+    cursor: pointer;
+}
+    .tree li a:active {
+        background-color: #efefef;
+    }
+
+    .tree li a:focus {
+        background-color: #efefef;
+    }
+.tree li button, .tree li button:active, .tree li button:focus {
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    outline: 0;
+}
+.toolbox .draggable {   
+    cursor: pointer;
+    font-size: 13px;
+}
+.toolbox .Eb-shaps {
+    font-size: 13px;
+    cursor: context-menu;
+}
+.toolbox ul {
+    margin: 0;  
+}
+.Eb-shaps-title {
+    padding: 4px 7px;
+}
+.toolbox .branch ul{
+    margin-left:7px;
+}
+.toolbox i{
+    width:25px;
+}
+.toolbox .textval {
+    margin-left: 15px;
+}
+
+.draggable {
+    list-style-type: none;
+}
+
+.dropped:hover{
+    cursor:pointer;   
+}
+.toolbox::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+}
+
+.toolbox::-webkit-scrollbar {
+    width: 10px;
+    background-color: #605b5b;
+}
+
+.toolbox::-webkit-scrollbar-thumb {
+    background-color: #6f6f6f;
+    border-radius: 6px;
+}
+/*.draggable:hover {
+    background-color: #a2dce4;
+    border-radius: 4px;
+}*/
+/*end side menuBar*/
+.tab-section {
+    position: fixed;
+    z-index: 5;
+    background-color: #f2f2f2;
+    width: 100%;
+    padding-top: 10px;
+}
+    .tab-section .nav-tabs {
+    border:none;
+    }
+    .headersections {
+        width: 50px;
+        float: left;
+        border: 1px solid #cccccc;
+        background-color: #fafafa;
+        color: #000000;
+        border-right: 0;
+    }
+.reportmenu {   
+    position: fixed;
+    z-index: 5;      
+}
+.Eb-shaps-title {
+    font-size: 13px;
+}
+.Eb-shaps li{
+    border-radius:0;
+}
+.shapes-tank .btn {
+    background-color: transparent;
+    border: none !important;
+    width: 40px;
+}
+.shapes-tank .btn:hover {
+    background-color: #f5f5f5;
+}
+.shapes-tank{
+  border:1px solid #ccc; 
+}
+.shapes-tank li:hover {
+    background-color: #f5f5f5;
+}
+.multiSplit {
+    width: 30px;
+    float: left;
+    border: 1px solid #cccccc;
+    background-color: #fafafa;
+    color: #000000;
+    cursor: pointer;
+}
+.headersections .btn {
+    align-self: flex-end;
+    border: none;
+    background-color: #fafafa;
+    color: #333;
+}
+.gutter.gutter-vertical {
+    background-color: #ccc;
+    cursor: ns-resize;
+}
+.ruler-top {
+    position: fixed;
+    z-index: 3;
+    height: 20px;   
+    border-left: 0;
+    margin-left:-19px;
+}
+.ruler {    
+    font-size: 10px;
+    overflow: hidden;
+    background-color: #fbf7f7;
+    display: inline-block;
+    height: inherit;   
+    border: 1px solid #ccc;
+}
+.rulerleft {
+    position: absolute;    
+    border: 1px solid #aaa;
+    font-size: 10px;
+    background-color: #fbf7f7;
+    margin-left: -19px;
+    margin-top: 20px;
+    width: 20px;
+    z-index: 2;
+    overflow: hidden;
+}
+.ruler > div {
+        display: inline-block;
+        background: #000;
+    }
+.rulerleft > div {
+    background: #000;
+}
+    .ruler .tickLabel {
+        position: relative;
+        top: -7px;
+        margin-left: 4px;
+        width: 1px;
+        height: 100%;
+        text-indent: 1px;
+        line-height: 16px;
+    }
+.ruler .tickLabel-cm {
+    position: relative;
+    top: -7px;
+    margin-left: calc(1mm - 1px);
+    width: 1px;
+    height: 100%;
+    text-indent: 1px;
+    line-height: 16px;
+}
+.ruler .tickLabel-inch {
+    position: relative;
+    top: -7px;
+    margin-left: calc(2.54mm - 1px);
+    width: 1px;
+    height: 100%;
+    text-indent: 1px;
+    line-height: 16px;
+}
+.ruler .tickLabel:first-of-type {
+            margin-left: 0;
+        }
+.ruler .tickLabel-cm:first-of-type {
+    margin-left: 0;
+}
+.ruler .tickLabel-inch:first-of-type {
+    margin-left: 0;
+}
+    .ruler .tickMajor {
+        margin-top: 12px;
+        margin-left: 4px;
+        width: 1px;
+        height: 6px;
+    }
+.ruler .tickMajor-cm {
+    margin-top: 12px;
+    margin-left: calc(1mm - 1px);
+    width: 1px;
+    height: 6px;
+}
+.ruler .tickMajor-inch {
+    margin-top: 12px;
+    margin-left: calc(2.54mm - 1px);
+    width: 1px;
+    height: 6px;
+}
+    .ruler .tickMinor {
+        margin-left: 4px;
+        width: 1px;
+        height: 4px;
+    }
+.ruler .tickMinor-cm {
+    margin-left: calc(1mm - 1px);
+    width: 1px;
+    height: 4px;
+}
+.ruler .tickMinor-inch {
+    margin-left: calc(2.54mm - 1px);
+    width: 1px;
+    height: 4px;
+}
+       .rulerleft .tickLabel:first-of-type {
+            margin-left: 0;
+            margin-top: -1px;
+        }
+.rulerleft .tickLabel-cm:first-of-type {
+    margin-left: 0;
+    margin-top: -1px;
+}
+.rulerleft .tickLabel-inch:first-of-type {
+    margin-left: 0;
+    margin-top: -1px;
+}
+    .rulerleft .tickLabel {
+        margin-top: 4px;
+        width: 100%;
+        height: 1px;
+    }
+.rulerleft .tickLabel-cm {
+    margin-top: calc(1mm - 1px);
+    width: 100%;
+    height: 1px;
+}
+.rulerleft .tickLabel-inch {
+    margin-top: calc(2.54mm - 1px);
+    width: 100%;
+    height: 1px;
+}
+    .rulerleft .tickMajor {
+        margin-top: 4px;
+        width: 6px;
+        height: 1px;
+        margin-left: 13px;
+    }
+.rulerleft .tickMajor-cm {
+    margin-top: calc(1mm - 1px);
+    width: 6px;
+    height: 1px;
+    margin-left: 13px;
+}
+.rulerleft .tickMajor-inch {
+    margin-top: calc(2.54mm - 1px);
+    width: 6px;
+    height: 1px;
+    margin-left: 13px;
+}
+    .rulerleft .tickMinor {
+        margin-top: 4px;
+        width: 4px;
+        height: 1px;
+        margin-left: 14px;
+    }
+.rulerleft .tickMinor-cm {
+    margin-top: calc(1mm - 1px);
+    width: 4px;
+    height: 1px;
+    margin-left: 14px;
+}
+.rulerleft .tickMinor-inch {
+    margin-top: calc(2.54mm - 1px);
+    width: 4px;
+    height: 1px;
+    margin-left: 14px;
+}
+.page {
+    display: block;
+    margin-left: 79px;
+    border: 1px solid #d8d8d8;
+    background-color: white;
+}
+.page-outer-container {
+    width:100%;
+    height:100%;
+}
+
+.page-outer-cont {
+    padding-right: 10px;
+    padding-bottom: 50px;
+}
+.pageCanvas {
+    position: relative;   
+    margin-bottom: 50px;
+    overflow-x: auto;
+}
+.pGreportBuilder {
+    margin-right: 10px;
+}
+
+.head_Box1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.eb-rpt-container .toolbox {
+    height: inherit;    
+    padding: 0 !important;
+    width: 100%;
+    background-color: #fcfcfc;
+    border: 1px solid #ccc;
+    overflow-y: auto;
+}
+.eb-rpt-container {   
+    background-color: #f2f2f2;
+}
+
+    .eb-rpt-container .toolbox li {
+        border: none;
+    }
+
+.styl {
+    list-style-type: none;
+    padding: 10px;
+}
+
+.page .textval {
+    margin: 0;
+    border: 1px solid #cccccc;
+}
+
+#selDsource {
+    width: 100%;
+}
+
+.reportmenu .btn-group > .btn:first-child {
+    margin-left: 5px !important;
+}
+
+.eb-rpt-container .side-toolbar {
+    height: 518px;
+    padding-left: 0;    
+    position: fixed;
+}
+
+.eb-rpt-container .PGgrid {
+    min-height: 1000px;
+    padding: 0;
+    z-index: 2;
+    background-color: #f2f2f2;
+    position: fixed;
+}
+
+.eb-rpt-container .title {
+    width: 98px;
+    height: 20px;    
+    z-index: 4;
+    display: inline-block;
+    float: left;   
+}
+
+.measurement {
+    height: 28px;
+    border-left: 0;
+    border-color: #dedede;
+    padding-bottom: 2px;
+}
+
+.custom-size {
+    width: 60px;
+    border: 1px solid #dedede;
+    height: 28px;
+    padding-bottom: 3px;
+}
+.rulerUnit {
+    width: 100%;   
+    background-color: #fbf7f7;
+    padding: 0;
+    height: inherit;
+    border-radius: 0;    
+}
+/*shapes*/
+.arrow-left {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid black;
+    float: left;
+    margin-top: -5px;
+}
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid black;
+    margin-left: -5px;
+}
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid black;
+    float: right;
+    margin-top: -5px;
+}
+    
+    .arrow-down {
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid black;
+        margin-left: -5px;
+        align-self: flex-end;
+    }
+
+.multiSplitHboxSub {
+    display: flex;
+    position:relative;
+    align-items: center;
+    font-size: 11px;
+}
+    .multiSplitHboxSub .lock-icon {
+        align-self: flex-end;
+        position: absolute;
+        left: 35%;
+        font-size: 14px;
+        bottom: 3px;
+    }
+.multiSplitHbox .gutter {
+    pointer-events: none;
+}
+
+.marked {
+    background-color: #d8f7f6;
+}
+.tool-box-div {
+    padding: 5px 4%;
+}
+.page .ui-resizable-handle {
+    background: #89c5dc;
+    height: 7px;
+    width: 7px;
+}
+.page .ui-resizable-n {          
+    top: -5px;
+    left: 50%;
+}
+.page .ui-resizable-e {
+    right: -5px;
+    top: 49%;
+}
+.page .ui-resizable-w {  
+    left: -5px;
+    top: 49%;   
+}
+.page .ui-resizable-s {   
+    bottom: -5px;
+    left: 50%;
+}
+.page ui-resizable-se .ui-icon, .ui-widget-content .ui-icon {
+    background-image:none;   
+}
+.page .ui-resizable-se {   
+    right: -5px;
+    bottom: -5px;
+}
+.page .dropped:focus {
+    outline: none !important;
+    border-color: #89c5dc;
+}
+.page .shape-horrizontal .ui-resizable-handle {
+    top: -3px;
+}
+.page .shape-vertical .ui-resizable-handle {
+    left: -3px;   
+}
+.page .shape-vertical {
+    display: flex;
+}
+.page [eb-type=ByArrV] .arrow-down {
+    margin-left: -10px;
+}
+.page .shape-vertical:hover {
+    transition: all 200ms ease-in;
+    transform: scale(1.3);
+}
+.page .shape-horrizontal:hover {
+    transition: all 200ms ease-in;
+    transform: scale(1.3);
+}
+/*.context-menu-item {    
+    color: #ffffff;    
+    background-color: transparent; 
+}*/
+.minimap {
+    /*-webkit-box-shadow: -1px -3px 52px 27px rgba(173,171,173,1);
+    -moz-box-shadow: -1px -3px 52px 27px rgba(173,171,173,1);
+    box-shadow: -1px -3px 52px 27px rgba(173,171,173,1);*/
+    border: 1px solid black;
+}
+/*report toolbox tab*/
+.eb-toolBoxReport .nav-tabs {
+    border-bottom: 2px solid #DDD;
+}
+
+    .eb-toolBoxReport .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+        border-width: 0;
+    }
+
+    .eb-toolBoxReport .nav-tabs > li > a {
+        border: none;
+        color: #666;
+    }
+
+    .eb-toolBoxReport .nav-tabs > li.active > a, .nav-tabs > li > a:hover {
+        border: none;
+        color: #4285F4 !important;
+        background: transparent;
+    }
+
+    .eb-toolBoxReport .nav-tabs > li > a::after {
+        content: "";
+        background: #4285F4;
+        height: 2px;
+        position: absolute;
+        width: 100%;
+        left: 0px;
+        bottom: -1px;
+        transition: all 250ms ease 0s;
+        transform: scale(0);
+    }
+
+    .eb-toolBoxReport .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after {
+        transform: scale(1);
+    }
+
+.eb-toolBoxReport .tab-nav > li > a::after {
+    background: #21527d none repeat scroll 0% 0%;
+    color: #fff;
+}
+
+.eb-toolBoxReport .tab-pane {
+    padding: 15px 0;
+}
+.eb-toolBoxReport .nav > li > a {
+    padding: 3px 15px;
+    font-size: 12px;
+}
+/*report toolbox tab*/
+.page .wm-container .ui-resizable-handle {   
+    opacity: 1;
+}
+.page .locked:hover:before {
+    background-color: #eaa6a6;
+    opacity:.5;
+}
+.page .locked:before {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+}

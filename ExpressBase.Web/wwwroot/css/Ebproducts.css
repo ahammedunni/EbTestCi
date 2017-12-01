@@ -1,0 +1,179 @@
+﻿.pd-0{
+    padding:0;
+}
+.Eb-bot-header .navbar {
+    height: auto;
+    padding: 14px;
+}
+.Eb-bot-header .navbar-default {
+    background-color:transparent;
+    /*background: var(--ebbg) !important;
+    background-image: var(--ebbgimage) !important;*/
+}
+.Eb-bot-header .navbar-default img {
+        height: 100%;
+        margin-top: 0; 
+        margin-bottom: 0; 
+        margin-right: 0; 
+}
+    .Eb-bot-header .navbar-default .navbar-nav > li > a {
+        color: white;
+        font-size: 13px;       
+    }
+.Eb-bot-header .btn-trial a {
+    background: #31d031;   
+    border: none;
+    border-radius: 2px;
+    padding: 10px !important;
+}
+    .Eb-bot-header .btn-trial a:hover {
+        background: #31d031 !important;
+    }
+/****** LOGIN MODAL ******/
+.loginmodal-container {
+    padding: 15px;
+    max-width: 360px;
+    width: 100% !important;
+    background-color: white;
+    margin: 0 auto;
+    border-radius: 2px;
+    overflow: hidden;
+    font-family: open sans;
+    font-weight: 300;
+}
+
+    .loginmodal-container h1 {
+        text-align: center;
+        font-size: 1.8em;
+        margin-bottom: 0;
+    }
+
+.loginmodal {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    height: 36px;
+    padding: 0 8px;
+    /* border-radius: 3px; */
+    /* -webkit-user-select: none;
+  user-select: none; */
+}
+
+.loginmodal-container a {
+    text-decoration: none;
+    color: #666;
+    text-align: center;
+    display: inline-block;
+}
+
+.loginmodal-container .signin-btn {
+    width: 100%;
+    background: #1e8db8;
+    color: white;
+}
+
+.login-sec-image {
+    width: 100%;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+
+    .login-sec-image img {
+        height: 50px;
+    }
+
+/*end login*/
+
+.bot-section2{
+  padding-bottom:50px;
+  font-family:open sans;
+  font-weight:300;
+}
+    .bot-section2 .tiles {
+        padding: 10px;
+    }
+    .bot-section2 .tiles h4{
+       color:#666;
+       font-size:20px;
+    }
+    .bot-section2 .tiles .tile-body{
+        height: 100%;
+        width:100%;    
+        text-align:center;
+    }
+.bot-video{
+    padding-bottom:50px;
+}
+.bot-video .container{
+    padding: 20px 20px 20px 20px;
+}
+    .bot-video .bot-video-body {
+        height:400px;
+        border:1px solid #ccc;
+    }
+.bot-pricing {
+    padding-bottom: 50px;
+    font-family: open sans;
+    font-weight: 300;
+}
+.bot-pricing-body .col-md-3{
+    
+}
+.bot-pricing-body .price-tile {
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 4px;
+}
+.price-tile-headsec {
+    height: 80px;
+    width: 100%;
+    background: #1e8db8;
+    padding: 10px;
+}
+.headsec-textarea {
+    display: inline-block;
+    color: white;
+    height: 100%;    
+    font-size: 18px;
+}
+.headsec-amount {
+    display: inline-block;
+    color: white;
+    height: 100%;   
+    float: right;
+    font-size: 38px;
+}
+.bot-image-bg img{
+    width:100%;
+}
+.price-tile-bdy {
+    height: 230px;
+}
+    .pricing-items {
+        text-align: center;
+        padding: 10px;
+        font-size: 16px;       
+        font-weight:400;
+    }
+    .mr-8{
+        margin-top:8px;
+    }
+.Enterprise-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.chatBoticons {
+    font-size: 35px;
+    color: #198bbe;
+}
+.bot-faq{
+    padding-bottom:50px;
+}
+    .bot-faq .answer{
+        margin-left:10px;
+    }
+    .bot-faq .faqs {
+        margin-top:20px;
+    }

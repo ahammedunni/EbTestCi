@@ -1,0 +1,16 @@
+﻿@{
+    @using Newtonsoft.Json;
+    var obj = JsonConvert.SerializeObject(ViewBag.Object);
+}
+
+
+<div class="side-menu-container">
+    <ul class="outer" style="padding-left:0;">
+        
+    </ul>
+</div>
+<script>
+
+    $(".outer").prepend(`@Html.Raw(ViewBag.menu)`);
+    menu.resultObj = @Html.Raw(obj);
+</script>

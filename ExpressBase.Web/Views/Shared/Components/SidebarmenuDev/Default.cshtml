@@ -1,0 +1,36 @@
+﻿@using ExpressBase.Common.Objects;
+@using ExpressBase.Objects;
+@{
+    @using Newtonsoft.Json;
+    var obj = JsonConvert.SerializeObject(ViewBag.Object);
+}
+<div class="side-menu-container">
+    <ul class="outer" style="padding-left:0;">
+        <li>
+            <a href="#" class="list-group-item menuApp">
+                <i class="fa fa-object-group"></i>Application
+            </a>
+        </li>
+        <li>
+            <a href="#" class="list-group-item collapsed" data-toggle="collapse" data-target="#dropdown2">
+                <i class="fa fa-object-group"></i>Objects<i class="fa fa-caret-down pull-right"></i>
+            </a>
+            <ul class="sub-menuObj collapse" id="dropdown2">
+                @{  foreach (var Op in Enum.GetValues(typeof(EbObjectType)))
+                    {
+                        var intop = (int)Op;
+                        <li><a class="list-group-item" data-key=@intop><i class="fa fa-caret-right"></i> @Op</a></li>
+
+                    }
+
+                }
+
+            </ul>
+        </li>
+    </ul>
+</div>
+<script>
+
+    menu.resultObj = @Html.Raw(obj);
+    
+</script>

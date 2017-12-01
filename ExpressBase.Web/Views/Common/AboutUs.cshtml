@@ -1,0 +1,163 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutExternal.cshtml";
+    Html.RenderPartial("ExtPageHeader");
+}
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+<section class="aboutus-header">
+    <div class="container-fluid">
+        <div class="row eb-banner">
+            <div class="col-md-12 no-padd eb-banner-text-img-sec">
+                <div class="col-md-9 col-lg-9 col-sm-9 col-xs-12 bg-color-banner">
+                    <h2>Empowering Small & Midsize Businesses</h2>
+                    <p>
+                        Our project proposal was selected to be one of the NASSCOM 10k Startup initiative.
+                        we are incubated at the NASSCOM 10k Startup Warehouse in Infopark, Kochi, Kerala.
+                    </p>
+                </div>    
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-12 banner-img pull-right">
+                    <img src="~/images/svg/cloudaboutus.svg" />
+                </div>                       
+            </div>
+        </div>
+    </div>
+</section>
+<!--Organisations-->
+<section id="founder" class="founder">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <img style="border-radius:0;margin-top: 30px;" src="~/images/founder.jpg" class="img-responsive">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="detail-info">
+                    <hgroup>
+                        <h3> Suresh Balasubramanian</h3>
+                        <h4>Founder & CEO/CTO</h4>
+                    </hgroup>
+                    <p>Suresh is an IT professional having 20+ years of experience working with both corporate and startups. A graduate in Chemistry, he started his career in Pharmaceutical Sales and Marketing with Sun Pharma. After 1¼ years he eventually ended up in the IT industry after a friend introduced him to the world of computers.</p>
+                    <p>A self taught IT professional, Suresh has worked with corporate like PayPal, BMC Software and Microsoft. Suresh dreams to build a world class next generation aPaaS product targeting Small/Medium enterprises. Suresh lives in Kerala, India with his wife Smruthi Sasidharan and 8 year old son Zorbian Smruthi.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Organisations-->
+<!--team-->
+<section class="team bg-fafa">
+    <div class="container">
+        <div class="row">
+            <h2 class="text-center">Team</h2>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 profile">
+                <div class="img-box">
+                    <img src="~/images/bini.jpg" class="img-responsive">
+                </div>
+                <h1>Bini Varghese</h1>
+                <h2>Software Engineer</h2>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 profile">
+                <div class="img-box">
+                    <img src="~/images/roby.jpg" class="img-responsive">
+                </div>
+                <h1>Roby Abraham</h1>
+                <h2>Software Engineer</h2>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 profile">
+                <div class="img-box">
+                    <img src="~/images/jith pic.jpg" class="img-responsive">
+                </div>
+                <h1>Jithjob K I</h1>
+                <h2>Software Engineer</h2>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 profile">
+                <div class="img-box">
+                    <img src="~/images/dona.jpg" class="img-responsive">
+                </div>
+                <h1>Dona Jose</h1>
+                <h2>Software Engineer</h2>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 profile">
+                <div class="img-box">
+                    <img src="~/images/amal.jpg" class="img-responsive">
+                </div>
+                <h1>Amal K Dev</h1>
+                <h2>Software Engineer</h2>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 profile">
+                <div class="img-box">
+                    <img src="~/images/unni.jpg" class="img-responsive">
+                </div>
+                <h1>Ahammed Unni</h1>
+                <h2>Software Engineer</h2>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 profile">
+                <div class="img-box">
+                    <img src="~/images/chinchu.jpg" class="img-responsive">
+                </div>
+                <h1>Chinchu C Vijayan</h1>
+                <h2>Software Engineer</h2>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 profile">
+                <div class="img-box">
+                    <img src="~/images/febin.jpg" class="img-responsive">
+                </div>
+                <h1>Febin Carlos</h1>
+                <h2>Software Engineer</h2>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- contact Modal -->
+<div id="contactModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Contact</h4>
+            </div>
+            <div class="modal-body">
+                <div class="containter">
+                    <div class="row">
+                        <form class="form-horizontal" name="commentform" method="post" action="#">
+                            <div class="col-xs-8">
+                                <div class="form-group">
+                                    <label for="InputName" class="col-lg-4 control-label">Name</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" name="first_name" id="first_name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputEmail" class="col-lg-4 control-label">Email</label>
+                                    <div class="col-lg-8">
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="InputMessage" class="col-lg-4 control-label">Message</label>
+                                    <div class="col-lg-8">
+                                        <textarea name="comments" id="comments" class="form-control" rows="5" required></textarea>
+                                    </div>
+                                </div>
+                                <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- End of Modal -->
+@{
+    Html.RenderPartial("PageFooter");
+}
+<script>
+    $(document).scroll(function () {
+        var y = $(this).scrollTop();
+        if (y > $('.aboutus-header').height()) {
+            $('#trial-btn').fadeIn();
+            $('.navbar-default').css({ "background-color": "var(--ebbg)", "background-image": "var(--ebbgimage)" });
+        } else {
+            $('#trial-btn').fadeOut();
+            $('.navbar-default').css({ "background-color": "transparent", "background-image": "none" });
+        }
+    });
+</script>

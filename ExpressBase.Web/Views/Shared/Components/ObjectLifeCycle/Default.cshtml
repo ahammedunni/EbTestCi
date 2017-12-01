@@ -1,0 +1,320 @@
+﻿@{
+    var tabNum = ViewBag.tabNum;
+    var cur_stat = ViewBag.CurrStatus;
+    @using Newtonsoft.Json;
+    var dvobj = JsonConvert.SerializeObject(ViewBag.StatusHistory);
+}
+<script>
+
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker({
+            size: 4
+        });
+        $('.selectpicker').selectpicker('refresh');
+        $.each(@Html.Raw(dvobj), function (i, obj) {
+            $('#timeline@(ViewBag.tabNum)').append("<li class='timeline-item' id= 'stat" + i + "_" + @(ViewBag.tabNum) + "' > " +
+                "<div class='timeline-badge' id='timeline-badge" + i + "_" + @(ViewBag.tabNum) + "'><i class='glyphicon glyphicon-check'></i></div>" +
+                "<div class='timeline-panel' style='min-height: 92px;'> " +
+                    "<div class='timeline-heading col-md-10'> " +
+                        "<div class='col-md-12'>" +
+                            "<div class='timeline-title col-md-1' style='display:inline'>" + obj.Status + "</div>" +
+                            "<div class='timeline-time col-md-8' style='display:inline'>" +
+                                "<p style='backgroung-color:lightgrey'><small class='text-muted'><i class='glyphicon glyphicon-time'></i>" + obj.CommitTs + "</small>" +
+                            "</div> " +
+                            "<small class='col-md-2 style='display:inline' > " + obj.CommitUname + "</small></p >" +
+                        "</div>" +
+                        "<div class='timeline-body' id='timeline-body" + i + "_" + @(ViewBag.tabNum) + "'> " +
+                            "<p class='timeline-body-clickmore'>" + obj.ChangeLog + "</p>" +
+                "</div>" +
+                "<a class='primary pull-right more' style='position:absolute; bottom: 0; right: 0;' id='more" + i + "_" + @(ViewBag.tabNum) + "'>more</a>" +
+                    "</div>" +
+
+                    "<div class='col-md-2'>" +
+                "<div> " +
+                            "<img class='img-circle img-thumbnail prof_dp pull-right' src= '../static/dp/dp_"+ obj.CommitUId +"_micro.jpg" + "'/>" +
+
+                        "</div> " +
+                    "</div> " +
+                "</div> " +
+
+                "</li>");
+            var classname;
+            if (obj.Status === "Test")
+                classname = "info";
+            if (obj.Status === "UAT")
+                classname = "primary";
+            if (obj.Status === "Live") {
+                classname = "success";
+                $('#stat' + i + "_" + @(ViewBag.tabNum)).addClass("livestat");
+            }
+            if (obj.Status === "Offline")
+                classname = "warning";
+            if (obj.Status === "Obsolete")
+                classname = "danger";
+            $('#timeline-badge' + i + "_" + @(ViewBag.tabNum)).addClass(classname);
+
+            $('#stat' + i + "_" + @(ViewBag.tabNum) + ' .more').on('click', function () {
+                var p_element = $('#timeline-body' + i + "_" + @(ViewBag.tabNum) + ' p');
+                p_element.toggleClass("timeline-body-clickmore");
+                var more = $('#more' + i + "_" + @(ViewBag.tabNum));
+                if (more.text() === 'more')
+                    more.text('less');
+                else
+                    more.text('more')
+            });
+        });
+    });
+    $('#st_chnglog@(ViewBag.tabNum)').on("focusout", function () {
+          var _chlog = $('#StatChlog@(ViewBag.tabNum)').val();
+        if (_chlog === "")
+             $('#st_chnglog@(ViewBag.tabNum)').addClass('has-error');
+        else
+             $('#st_chnglog@(ViewBag.tabNum)').removeClass('has-error');
+    });
+
+    $('#st_dd@(ViewBag.tabNum)').on("focusout", function () {
+         var _stat = $('#status_drpdwn@(ViewBag.tabNum) option:selected').val();
+        if (_stat === "Select Status")
+            $('#st_dd@(ViewBag.tabNum)').addClass('has-error');
+        else
+            $('#st_dd@(ViewBag.tabNum)').removeClass('has-error');
+    });
+
+    $('#confirm_stat_change@(ViewBag.tabNum)').on("click", function () {
+        var _chlog = $('#StatChlog@(ViewBag.tabNum)').val();
+        var _stat = $('#status_drpdwn@(ViewBag.tabNum) option:selected').val();
+        if (_stat != "Select Status" && _chlog != ""){
+            $('#st_chnglog@(ViewBag.tabNum)').removeClass('has-error');
+            $('#st_dd@(ViewBag.tabNum)').removeClass('has-error');
+            $.LoadingOverlay("show");
+            $.post('../Eb_Object/ChangeStatus', { _refid: '@ViewBag.Curr_refid', _changelog: _chlog, _status: _stat }, function () {
+                $('#vernav@(ViewBag.tabNum)').empty();
+                $.post("../Eb_Object/GetLifeCycle", { _tabnum: @ViewBag.tabNum, cur_status: _stat, refid: '@ViewBag.Curr_refid' }, function (text) {
+                    $('#vernav@(ViewBag.tabNum)').append(text);
+                    $.LoadingOverlay("hide");
+                });
+            });
+        }
+
+    });
+</script>
+<style>
+    /* Timeline */
+    .timeline {
+        list-style: none;
+        /*padding: 20px;*/
+        position: relative;
+    }
+
+        .timeline:before {
+            top: 40px;
+            bottom: 0;
+            position: absolute;
+            content: ' ';
+            width: 3px;
+            background-color: #eeeeee;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+
+        .timeline .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+            .timeline .timeline-item:before,
+            .timeline .timeline-item:after {
+                content: '';
+                display: table;
+            }
+
+            .timeline .timeline-item:after {
+                clear: both;
+            }
+
+            .timeline .timeline-item .timeline-badge {
+                color: #fff;
+                width: 54px;
+                height: 54px;
+                line-height: 52px;
+                font-size: 22px;
+                text-align: center;
+                position: absolute;
+                top: 18px;
+                left: 50%;
+                margin-left: -25px;
+                background-color: #7c7c7c;
+                border: 3px solid #ffffff;
+                border-top-right-radius: 50%;
+                border-top-left-radius: 50%;
+                border-bottom-right-radius: 50%;
+                border-bottom-left-radius: 50%;
+            }
+
+                .timeline .timeline-item .timeline-badge i,
+                .timeline .timeline-item .timeline-badge .fa,
+                .timeline .timeline-item .timeline-badge .glyphicon {
+                    top: 2px;
+                    left: 0px;
+                }
+
+                .timeline .timeline-item .timeline-badge.primary {
+                    background-color: #1f9eba;
+                }
+
+                .timeline .timeline-item .timeline-badge.info {
+                    background-color: #5bc0de;
+                }
+
+                .timeline .timeline-item .timeline-badge.success {
+                    background-color: #59ba1f;
+                }
+
+                .timeline .timeline-item .timeline-badge.warning {
+                    background-color: #d1bd10;
+                }
+
+                .timeline .timeline-item .timeline-badge.danger {
+                    background-color: #ba1f1f;
+                }
+
+            .timeline .timeline-item .timeline-panel {
+                position: relative;
+                width: 46%;
+                float: left;
+                right: 16px;
+                border: 1px solid #c0c0c0;
+                background: #ffffff;
+                border-radius: 2px;
+                padding: 5px;
+                -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+                box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+            }
+
+                .timeline .timeline-item .timeline-panel:before {
+                    position: absolute;
+                    top: 26px;
+                    right: -16px;
+                    display: inline-block;
+                    border-top: 16px solid transparent;
+                    border-left: 16px solid #c0c0c0;
+                    border-right: 0 solid #c0c0c0;
+                    border-bottom: 16px solid transparent;
+                    content: ' ';
+                }
+
+                .timeline .timeline-item .timeline-panel .timeline-title {
+                    margin-top: 0;
+                    color: inherit;
+                }
+
+                .timeline .timeline-item .timeline-panel .timeline-body > p,
+                .timeline .timeline-item .timeline-panel .timeline-body > ul {
+                    margin-bottom: 0;
+                    margin-top: 5px;
+                }
+
+                    .timeline .timeline-item .timeline-panel .timeline-body > p + p {
+                        margin-top: 5px;
+                    }
+    /*li*/
+    .livestat:last-child:nth-child(even) {
+        float: right;
+    }
+
+    .livestat:nth-child(even) .timeline-panel {
+        float: right;
+        left: 16px;
+    }
+
+        .livestat:nth-child(even) .timeline-panel:before {
+            border-left-width: 0;
+            border-right-width: 14px;
+            left: -14px;
+            right: auto;
+        }
+    /**/
+
+    .livestat:nth-child(odd) .timeline-panel {
+        float: right;
+        left: 16px;
+    }
+
+        .livestat:nth-child(odd) .timeline-panel:before {
+            border-left-width: 0;
+            border-right-width: 14px;
+            left: -14px;
+            right: auto;
+        }
+
+    .timeline-body-clickmore {
+        white-space: nowrap;
+        width: 25em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .change_stat_box {
+        background-color: midnightblue;
+        padding: 10px;
+    }
+</style>
+<div class='container'>
+    <div class='row statwindow col-md-12' id="statwindow@(tabNum)">
+        <ul class='timeline' id='timeline@(tabNum)'>
+            <li class='timeline-item' id='stat@(tabNum)'>
+                <div class='col-md-offset-3 col-md-5 change_stat_box'>
+                    <div class='timeline-heading'>
+                        <div class="btn btn-default pull-right" id='confirm_stat_change@(tabNum)' style="margin-bottom:5px">
+                            Apply  <i class="fa fa-save fa-1x"></i>
+                        </div>
+                            <div class='form-control col-md-12' style="margin-bottom:5px">Current Status :@(cur_stat)</div>
+                       <div id="st_dd@(tabNum)" class="form-group">
+                                <select class='selectpicker btn form-control' id='status_drpdwn@(tabNum)'>
+                                    <option value='Select Status'>Select Status</option>
+                                    @{
+                                        if (cur_stat == "Dev")
+                                        {
+                                            <option value='Test'>Test</option>
+                                        }
+                                        if (cur_stat == "Test")
+                                        {
+                                            <option value='Dev'> Dev </option>
+                                            <option value='UAT' id='uat'> UAT </option>
+                                            <option value='Live'> Live </option>
+                                        }
+                                        if (cur_stat == "UAT")
+                                        {
+                                            <option value='Live'> Live </option>
+                                        }
+                                        if (cur_stat == "Live")
+                                        {
+                                            <option value='Dev'> Dev </option>
+                                            <option value='Test'> Test </option>
+                                            <option value='Offline'> Offline </option>
+                                        }
+                                        if (cur_stat == "Offline")
+                                        {
+                                            <option value='Dev'> Dev </option>
+                                            <option value='Test'> Test </option>
+                                            <option value='Obsolete'> Obsolete </option>
+                                        }
+                                        if (cur_stat == "Obsolete")
+                                        {
+                                            @*do something*@
+                                        }
+                                    }
+                                </select>
+                            </div>
+</div>
+                    <div class='timeline-body'>
+                        <div class=''>
+                            <div id="st_chnglog@(tabNum)" class="form-group st_chnglog">
+                                <textarea id='StatChlog@(tabNum)' class='StatChlog form-control' rows="5" placeholder='Change log' required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

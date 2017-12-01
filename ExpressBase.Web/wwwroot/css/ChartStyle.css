@@ -1,0 +1,25 @@
+﻿
+
+
+.tag-cont {
+    height: inherit;
+}
+
+.tag-wraper {
+    border: solid 1px #eee;
+    height:48%;
+    width:100%;
+}
+.tag-scroll {
+    overflow-y: auto;
+    height: calc(100% - 30px);
+}
+.tag-wraper:nth-child(2) {
+    margin-top:5px;
+}
+.tag-cont .colTile:hover {
+    cursor: move;
+}
+canvas{
+    height:100% !important;
+}

@@ -1,0 +1,97 @@
+﻿@page
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Excel To HTML using codebeautify.org</title>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/Eb.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/EbChatBot.css" />@*jith*@
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="~/js/ChatBot/Eb_chatBot.js"></script>@*jith*@
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        var chatBotObj = new Eb_chatBot();
+        chatBotObj.EXPRESSbase_SOLUTION_ID = "@ViewBag.tid";
+
+
+    // This is called with the results from from FB.getLoginStatus().
+    function statusChangeCallback(response) {
+        console.log('statusChangeCallback');
+        console.log(response);
+        // The response object is returned with a status field that lets the
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            FB.api('/me?fields=id,name,picture', function (response) {
+                chatBotObj.FB = FB;            
+                chatBotObj.socialId = response.id;
+                chatBotObj.picture = response.picture;
+                chatBotObj.greetings(response.name);
+            });
+        } else {
+            // The person is not logged into your app or we are unable to tell.
+            chatBotObj.getMsg($("<button class='btn' onclick='login();'>Login with Facebook</button>"));
+        }
+    }
+
+    function login() {
+        FB.login(function (response) {
+            if (response.authResponse) {
+                statusChangeCallback(response);
+            } else {
+                alert('Login Failed!'); 
+            }
+        }, { scope: 'email' });
+    }
+
+    // This function is called when someone finishes with the Login
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '141908109794829',//,'1525758114176201',//
+            cookie: true,  // enable cookies to allow the server to access
+            // the session
+            xfbml: true,  // parse social plugins on this page
+            version: 'v2.11'//'v2.8' // use graph api version 2.8
+        });
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+
+        };
+
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        
+
+    </script>
+
+</body>
+</html>
