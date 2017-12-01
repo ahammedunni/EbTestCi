@@ -10,8 +10,8 @@ dotnet publish -c Release --output obj/Docker/publish/ebweb ./ExpressBase.Web/Ex
 dotnet publish -c Release --output obj/Docker/publish/ebss ./ExpressBase.ServiceStack/ExpressBase.ServiceStack.csproj
 
 # Build the Docker images
-docker build -t us.gcr.io/avian-silo-186815/ebweb:$TAG ./ExpressBase.Web/.
-docker build -t us.gcr.io/avian-silo-186815/ebss:$TAG ./ExpressBase.ServiceStack/.
+docker build -t asia.gcr.io/avian-silo-186815/ebweb:$TAG ./ExpressBase.Web/.
+docker build -t asia.gcr.io/avian-silo-186815/ebss:$TAG ./ExpressBase.ServiceStack/.
 
 docker tag asia.gcr.io/avian-silo-186815/ebweb:$TAG asia.gcr.io/avian-silo-186815/ebweb:latest
 docker tag asia.gcr.io/avian-silo-186815/ebss:$TAG asia.gcr.io/avian-silo-186815/ebss:latest
