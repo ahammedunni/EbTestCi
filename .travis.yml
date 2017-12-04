@@ -14,7 +14,6 @@ matrix:
 before_script:
   - chmod a+x ./build.sh
   - chmod a+x ./deploy.sh
-  - curl https://sdk.cloud.google.com | bash;
 # Add gcloud to $PATH
   - gcloud version
 # Auth flow
