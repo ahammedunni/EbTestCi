@@ -17,12 +17,20 @@ docker tag $GCP_CONTAINER/ebweb:$TAG $DOCKER_SERVER/ebweb:$TAG
 docker tag $GCP_CONTAINER/ebss:$TAG $DOCKER_SERVER/ebss:$TAG
 docker tag $DOCKER_SERVER/ebweb:$TAG $DOCKER_SERVER/ebweb:latest
 docker tag $DOCKER_SERVER/ebss:$TAG $DOCKER_SERVER/ebss:latest
-# Login to Docker Hub and upload images
 
+# Login to Azure Container Registry and upload images
+docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_SERVER
+
+docker push $DOCKER_SERVER/ebss:latest
+docker push $DOCKER_SERVER/ebss:$TAG
+docker push $DOCKER_SERVER/ebweb:$TAG
+docker push $DOCKER_SERVER/ebweb:latest
+
+# Login to GCP Container Registry and upload images
 echo $GCLOUD_KEY | base64 --decode > gcloud.p12
-echo $KEY_FILE > keyfile.json
-cat keyfile.json
-gcloud auth activate-service-account $GCLOUD_EMAIL --key-file keyfile.json --project compelling-weft-188014 
+cat gcloud.p12
+gcloud auth activate-service-account $GCLOUD_EMAIL --key-file gcloud.p12 --project compelling-weft-188014
+#Next Step
 ssh-keygen -f ~/.ssh/google_compute_engine -N ""
 
 gcloud container clusters get-credentials $GOOGLE_APPLICATION_CREDENTIALS
@@ -32,9 +40,3 @@ gcloud docker -- push $GCP_CONTAINER/ebss:$TAG  > /dev/null
 gcloud docker -- push $GCP_CONTAINER/ebweb:latest  > /dev/null
 gcloud docker -- push $GCP_CONTAINER/ebss:latest  > /dev/null
 
-docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_SERVER
-
-docker push $DOCKER_SERVER/ebss:latest
-docker push $DOCKER_SERVER/ebss:$TAG
-docker push $DOCKER_SERVER/ebweb:$TAG
-docker push $DOCKER_SERVER/ebweb:latest
