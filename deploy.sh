@@ -20,8 +20,11 @@ docker tag $DOCKER_SERVER/ebss:$TAG $DOCKER_SERVER/ebss:latest
 # Login to Docker Hub and upload images
 
 echo $GCLOUD_KEY > keyfile.json
+cat key-file.json
 gcloud auth activate-service-account $GCLOUD_EMAIL --key-file keyfile.json
 ssh-keygen -f ~/.ssh/google_compute_engine -N ""
+
+
 
 gcloud container clusters get-credentials $GOOGLE_APPLICATION_CREDENTIALS
 
