@@ -22,7 +22,7 @@ script:
   - ./build.sh
 deploy:
   - provider: script
-    script: ./deploy.sh
+    script: ./deploy.sh $TRAVIS_TAG
     skip_cleanup: true
     on:
       tags: true

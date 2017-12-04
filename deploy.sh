@@ -1,9 +1,7 @@
 #!/bin/bash
 set -ev
 
-TAG=$1	
-DOCKER_USERNAME=$2
-DOCKER_PASSWORD=$3
+TAG=$1
 
 # Create publish artifact
 dotnet publish -c Release --output obj/Docker/publish/ebweb ./ExpressBase.Web/ExpressBase.Web.csproj
