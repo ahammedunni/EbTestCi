@@ -21,8 +21,6 @@ deploy:
   - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash; fi
 # Add gcloud to $PATH
   - source /home/travis/google-cloud-sdk/path.bash.inc
-
-  - provider: script
 	script: 
 	  - ./auth-gcloud.sh
 	    ./deploy.sh
