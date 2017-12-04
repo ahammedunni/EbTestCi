@@ -14,10 +14,7 @@ matrix:
 before_script:
   - chmod a+x ./build.sh
   - chmod a+x ./deploy.sh
-# Add gcloud to $PATH
-  - gcloud version
-# Auth flow
-  - bash auth-gcloud.sh
+
 script:
   - ./build.sh
 deploy:

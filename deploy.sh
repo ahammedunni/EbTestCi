@@ -19,6 +19,12 @@ docker tag $DOCKER_SERVER/ebweb:$TAG $DOCKER_SERVER/ebweb:latest
 docker tag $DOCKER_SERVER/ebss:$TAG $DOCKER_SERVER/ebss:latest
 # Login to Docker Hub and upload images
 
+echo $GCLOUD_KEY | base64 --decode > gcloud.p12
+gcloud auth activate-service-account $GCLOUD_EMAIL --key-file gcloud.p12
+ssh-keygen -f ~/.ssh/google_compute_engine -N ""
+
+gcloud container clusters get-credentials $GOOGLE_APPLICATION_CREDENTIALS
+
 gcloud docker -- push $GCP_CONTAINER/ebweb:$TAG  > /dev/null
 gcloud docker -- push $GCP_CONTAINER/ebss:$TAG  > /dev/null
 gcloud docker -- push $GCP_CONTAINER/ebweb:latest  > /dev/null
