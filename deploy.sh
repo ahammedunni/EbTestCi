@@ -22,15 +22,15 @@ dotnet publish -c Release --output obj/Docker/publish/ebss ./ExpressBase.Service
 # gcloud docker -- push asia.gcr.io/avian-silo-186815/ebss:latest  > /dev/null
 
 
-docker login -u ebraviscitest -p s2Bue=CSuqsjYkmBDaewkEc9k1I3b6wD ebraviscitest.azurecr.io
+docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_SERVER
 
-docker build -t ebraviscitest.azurecr.io/ebweb:$TAG ./ExpressBase.Web/.
-docker build -t ebraviscitest.azurecr.io/ebss:$TAG ./ExpressBase.ServiceStack/.
+docker build -t $DOCKER_SERVER/ebweb:$TAG ./ExpressBase.Web/.
+docker build -t $DOCKER_SERVER/ebss:$TAG ./ExpressBase.ServiceStack/.
 
-docker tag ebraviscitest.azurecr.io/ebweb:$TAG ebraviscitest.azurecr.io/ebweb:latest
-docker tag ebraviscitest.azurecr.io/ebss:$TAG ebraviscitest.azurecr.io/ebss:latest
+docker tag $DOCKER_SERVER/ebweb:$TAG $DOCKER_SERVER/ebweb:latest
+docker tag $DOCKER_SERVER/ebss:$TAG $DOCKER_SERVER/ebss:latest
 
-docker push ebraviscitest.azurecr.io/ebss:latest
-docker push ebraviscitest.azurecr.io/ebss:$TAG
-docker push ebraviscitest.azurecr.io/ebweb:$TAG
-docker push ebraviscitest.azurecr.io/ebweb:latest
+docker push $DOCKER_SERVER/ebss:latest
+docker push $DOCKER_SERVER/ebss:$TAG
+docker push $DOCKER_SERVER/ebweb:$TAG
+docker push $DOCKER_SERVER/ebweb:latest
