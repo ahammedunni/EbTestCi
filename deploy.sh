@@ -27,9 +27,9 @@ docker push $DOCKER_SERVER/ebweb:$TAG
 docker push $DOCKER_SERVER/ebweb:latest
 
 # Login to GCP Container Registry and upload images
-echo $GCLOUD_KEY | base64 --decode > gcloud.p12
-cat gcloud.p12
-gcloud auth activate-service-account $GCLOUD_EMAIL --key-file gcloud.p12 --project compelling-weft-188014
+echo $GCLOUD_KEY | base64 > keyfile.json
+printenv
+gcloud auth activate-service-account $GCLOUD_EMAIL --key-file keyfile.json --project compelling-weft-188014
 #Next Step
 ssh-keygen -f ~/.ssh/google_compute_engine -N ""
 
