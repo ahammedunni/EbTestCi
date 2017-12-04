@@ -14,16 +14,16 @@ cache:
 before_script:
   - chmod a+x ./build.sh
   - chmod a+x ./deploy.sh
-  - chmod a+x ./auth-gcloud.sh   
 script:
   - ./build.sh
 deploy:
   - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash; fi
 # Add gcloud to $PATH
   - source /home/travis/google-cloud-sdk/path.bash.inc
-	script: 
-	  - ./auth-gcloud.sh
-	    ./deploy.sh
+# Auth flow
+  - bash auth-gcloud.sh
+  - provider: script
+    script: ./deploy.sh
     skip_cleanup: true
     on:
       tags: true
