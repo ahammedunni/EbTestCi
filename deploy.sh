@@ -22,7 +22,7 @@ dotnet publish -c Release --output obj/Docker/publish/ebss ./ExpressBase.Service
 # gcloud docker -- push asia.gcr.io/avian-silo-186815/ebss:latest  > /dev/null
 
 
-docker login -u ebraviscitest -p s2Bue=CSuqsjYkmBDaewkEc9k1I3b6wD
+docker login -u ebraviscitest -p s2Bue=CSuqsjYkmBDaewkEc9k1I3b6wD ebraviscitest.azurecr.io
 
 docker build -t ebraviscitest.azurecr.io/ebweb:$TAG ./ExpressBase.Web/.
 docker build -t ebraviscitest.azurecr.io/ebss:$TAG ./ExpressBase.ServiceStack/.
