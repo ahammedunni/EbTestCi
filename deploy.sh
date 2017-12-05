@@ -32,7 +32,7 @@ gcloud auth activate-service-account $GCLOUD_EMAIL --key-file keyfile.json --pro
 #Next Step
 ssh-keygen -f ~/.ssh/google_compute_engine -N ""
 
-gcloud container clusters get-credentials $GOOGLE_APPLICATION_CREDENTIALS
+gcloud container clusters get-credentials $GCP_PROJECT_NAME
 
 gcloud docker -- push $GCP_CONTAINER/ebweb:$TAG  > /dev/null
 gcloud docker -- push $GCP_CONTAINER/ebss:$TAG  > /dev/null
