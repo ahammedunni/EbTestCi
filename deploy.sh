@@ -26,6 +26,8 @@ docker push $DOCKER_SERVER/ebss:$TAG
 docker push $DOCKER_SERVER/ebweb:$TAG
 docker push $DOCKER_SERVER/ebweb:latest
 
+gcloud --quiet components update kubectl
+
 # Login to GCP Container Registry and upload images
 echo $GCLOUD_KEY | base64 --decode > keyfile.json
 gcloud auth activate-service-account $GCLOUD_EMAIL --key-file keyfile.json --project compelling-weft-188014
@@ -39,3 +41,5 @@ gcloud docker -- push $GCP_CONTAINER/ebss:$TAG  > /dev/null
 gcloud docker -- push $GCP_CONTAINER/ebweb:latest  > /dev/null
 gcloud docker -- push $GCP_CONTAINER/ebss:latest  > /dev/null
 
+kubectl set image deployment/eb-ss ebss=$GCP_CONTAINER/ebss:$TAG
+kubectl set image deployment/eb-web ebweb=$GCP_CONTAINER/ebweb:$TAG
