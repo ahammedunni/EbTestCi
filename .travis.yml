@@ -8,8 +8,6 @@ matrix:
       sudo: required
       mono: 5.4.1
       dotnet: 2.0.0
-      gcloud: latest
-      kubectl: latest
       cache:
         directories:
           - "$HOME/google-cloud-sdk/"
