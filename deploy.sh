@@ -26,6 +26,10 @@ docker push $DOCKER_SERVER/ebss:$TAG
 docker push $DOCKER_SERVER/ebweb:$TAG
 docker push $DOCKER_SERVER/ebweb:latest
 
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+
 # Login to GCP Container Registry and upload images
 echo $GCLOUD_KEY | base64 --decode > keyfile.json
 gcloud auth activate-service-account $GCLOUD_EMAIL --key-file keyfile.json
