@@ -26,7 +26,7 @@ docker push $DOCKER_SERVER/ebss:$TAG
 docker push $DOCKER_SERVER/ebweb:$TAG
 docker push $DOCKER_SERVER/ebweb:latest
 
-gcloud --quiet components update kubectl
+gcloud components update kubectl
 
 # Login to GCP Container Registry and upload images
 echo $GCLOUD_KEY | base64 --decode > keyfile.json
