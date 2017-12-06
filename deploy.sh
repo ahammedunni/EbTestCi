@@ -7,17 +7,11 @@ TAG=$1
 dotnet publish -c Release --output obj/Docker/publish/ebweb ./ExpressBase.Web/ExpressBase.Web.csproj
 dotnet publish -c Release --output obj/Docker/publish/ebss ./ExpressBase.ServiceStack/ExpressBase.ServiceStack.csproj
 
+sudo rm ./ExpressBase.ServiceStack/obj/Docker/publish/ebss/web.config
 # # Build the Docker images
 docker build -t $GCP_CONTAINER/ebweb:$TAG ./ExpressBase.Web/.
 docker build -t $GCP_CONTAINER/ebss:$TAG ./ExpressBase.ServiceStack/.
-#################################################################################################Images#################################################################################################
 
-ls -sh ./ExpressBase.ServiceStack/obj/Docker/publish/ebss
-du -sh ./ExpressBase.ServiceStack/obj/Docker/publish
-docker images
-
-
-#################################################################################################Images#################################################################################################
 docker tag $GCP_CONTAINER/ebweb:$TAG $GCP_CONTAINER/ebweb:latest
 docker tag $GCP_CONTAINER/ebss:$TAG $GCP_CONTAINER/ebss:latest
 docker tag $GCP_CONTAINER/ebweb:$TAG $DOCKER_SERVER/ebweb:$TAG
