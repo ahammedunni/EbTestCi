@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="1.18.0" />
+    <PackageReference Include="FOSS.ServiceStack.Core" Version="1.0.43" />
   </ItemGroup>
 
   <ItemGroup>
