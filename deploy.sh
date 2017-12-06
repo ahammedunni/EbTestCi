@@ -10,13 +10,16 @@ dotnet publish -c Release --output obj/Docker/publish/ebss ./ExpressBase.Service
 # # Build the Docker images
 docker build -t $GCP_CONTAINER/ebweb:$TAG ./ExpressBase.Web/.
 docker build -t $GCP_CONTAINER/ebss:$TAG ./ExpressBase.ServiceStack/.
-
+#################################################################################################Images#################################################################################################
+docker images
+#################################################################################################Images#################################################################################################
 docker tag $GCP_CONTAINER/ebweb:$TAG $GCP_CONTAINER/ebweb:latest
 docker tag $GCP_CONTAINER/ebss:$TAG $GCP_CONTAINER/ebss:latest
 docker tag $GCP_CONTAINER/ebweb:$TAG $DOCKER_SERVER/ebweb:$TAG
 docker tag $GCP_CONTAINER/ebss:$TAG $DOCKER_SERVER/ebss:$TAG
 docker tag $DOCKER_SERVER/ebweb:$TAG $DOCKER_SERVER/ebweb:latest
 docker tag $DOCKER_SERVER/ebss:$TAG $DOCKER_SERVER/ebss:latest
+
 
 # Login to Azure Container Registry and upload images
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_SERVER
