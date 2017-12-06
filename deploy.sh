@@ -14,6 +14,7 @@ docker build -t $GCP_CONTAINER/ebss:$TAG ./ExpressBase.ServiceStack/.
 ls -sh ./ExpressBase.Web/.
 ls -sh ./ExpressBase.ServiceStack/.
 ls -sh obj/Docker/publish/ebss
+du -sh obj/Docker/publish/ebss
 docker images
 
 
