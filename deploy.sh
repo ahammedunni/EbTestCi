@@ -11,10 +11,9 @@ dotnet publish -c Release --output obj/Docker/publish/ebss ./ExpressBase.Service
 docker build -t $GCP_CONTAINER/ebweb:$TAG ./ExpressBase.Web/.
 docker build -t $GCP_CONTAINER/ebss:$TAG ./ExpressBase.ServiceStack/.
 #################################################################################################Images#################################################################################################
-ls -sh ./ExpressBase.Web/.
-ls -sh ./ExpressBase.ServiceStack/.
-ls -sh obj/Docker/publish/ebss
-du -sh obj/Docker/publish/ebss
+
+ls -sh ./ExpressBase.ServiceStack/obj/Docker/publish/ebss
+du -sh ./ExpressBase.ServiceStack/obj/Docker/publish
 docker images
 
 
