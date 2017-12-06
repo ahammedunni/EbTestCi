@@ -72,36 +72,24 @@ namespace ExpressBase.Security
             }
         }
 
-        //for protobuf - do not remove
-        public User() { }
-
-        public User(int id, string uname,string fname)
-        {
-            this.Email = uname;
-            this.UserId = id;
-        }
-
         public User(int id, string uname, string fname,string proimg, string prolink,List<string> roles, List<string> permissions)
         {
             this.Email = uname;
             this.UserId = id;
             this.Proimg = proimg;
             this.Prolink = prolink;
-            this.Roles = roles;
-            this.Permissions = permissions;
+            this.Roles = roles ?? new List<string>();
+            this.Permissions = permissions ?? new List<string>();
         }
 
-        public User(int id, string uname)
-        {
-            this.UserId = id;
-            this.Email = uname;
-         
-        }
-        public User(int id, string uname, string fname, string profileimg)
+        public User(int id, string uname, string fname, string profileimg, List<string> roles, List<string> permissions)
         {
             this.Email = uname;
             this.UserId = id;
+            this.FirstName = fname;
             this.Proimg = profileimg;
+            this.Roles = roles ?? new List<string>();
+            this.Permissions = permissions ?? new List<string>();
         }
 
         /// <summary>
@@ -157,44 +145,49 @@ namespace ExpressBase.Security
             return this.Permissions.Contains(permission);
         }    
 
-        public static User GetInfraUser(IDatabase db, string uname, string pass)
-        {
-            User _user = null;
+        //public static User GetInfraUser(IDatabase db, string uname, string pass)
+        //{
+        //    User _user = null;
 
-            string sql = "UPDATE eb_tenants SET loginattempts = loginattempts + 1 WHERE cname = @cname AND password = @password;";
-                 sql +="SELECT id, firstname, profileimg,loginattempts FROM eb_tenants WHERE cname = @cname AND password = @password AND isverified = TRUE";
+        //    string sql = "UPDATE eb_tenants SET loginattempts = loginattempts + 1 WHERE cname = @cname AND password = @password;";
+        //         sql +="SELECT id, firstname, profileimg,loginattempts FROM eb_tenants WHERE cname = @cname AND password = @password AND isverified = TRUE";
 
-            DbParameter[] parameters = {
-                db.GetNewParameter("cname", System.Data.DbType.String, uname),
-                db.GetNewParameter("password", System.Data.DbType.String, pass)
-            };
+        //    DbParameter[] parameters = {
+        //        db.GetNewParameter("cname", System.Data.DbType.String, uname),
+        //        db.GetNewParameter("password", System.Data.DbType.String, pass)
+        //    };
 
-            EbDataTable dt = db.DoQuery(sql, parameters);
+        //    EbDataTable dt = db.DoQuery(sql, parameters);
 
-            if (dt.Rows.Count != 0)
-            {
-                _user = new User(Convert.ToInt32(dt.Rows[0][0]), uname, dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString());
-                _user.loginattempts = Convert.ToInt32(dt.Rows[0][3]);
-            }        
+        //    if (dt.Rows.Count != 0)
+        //    {
+        //        _user = new User(Convert.ToInt32(dt.Rows[0][0]), uname, dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString());
+        //        _user.loginattempts = Convert.ToInt32(dt.Rows[0][3]);
+        //    }        
 
-            return _user;
-        }
+        //    return _user;
+        //}
 
         public static User GetInfraUserViaSocial(IDatabase db, string socialId)
         {
             User _user = null;
 
-            string sql = "SELECT id, email,firstname, profileimg FROM eb_users WHERE socialid = @socialid;";
+            string sql = "SELECT * FROM eb_authenticateuser(@uname,@pass,@social);";
 
-            DbParameter[] parameters = {
-                db.GetNewParameter("socialid", System.Data.DbType.String, socialId)
-            };
+            DbParameter[] parameters = { db.GetNewParameter("@uname", DbType.String, string.Empty), db.GetNewParameter("@pass", DbType.String, string.Empty), db.GetNewParameter("social", System.Data.DbType.String, socialId) };         
 
-            EbDataTable dt = db.DoQuery(sql, parameters);
+            EbDataTable ds = db.DoQuery(sql, parameters);
+           
+            if (ds.Rows.Count > 0)
+            {
+                int userid = Convert.ToInt32(ds.Rows[0][0]);
+                if (userid > 0)
+                {
+                    _user = new User(userid, ds.Rows[0][1].ToString(), ds.Rows[0][2].ToString(), ds.Rows[0][3].ToString(), ds.Rows[0][4].ToString(), ds.Rows[0][6].ToString().Split(',').ToList(), ds.Rows[0][7].ToString().Split(',').ToList());
+                    _user.loginattempts = Convert.ToInt32(ds.Rows[0][8]);
+                }
 
-            if (dt.Rows.Count != 0)
-                _user = new User(Convert.ToInt32(dt.Rows[0][0]), dt.Rows[0][1].ToString() , dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString());
-
+            }
             return _user;
         }
 
@@ -202,7 +195,7 @@ namespace ExpressBase.Security
         {
             User _user = null;
             string sql = "UPDATE eb_tenants SET isverified = TRUE WHERE cname = @cname AND u_token = @u_token;";
-               sql += "SELECT id, firstname,profileimg FROM eb_tenants WHERE cname = @cname AND u_token = @u_token";
+            sql += "SELECT id, firstname,profileimg FROM eb_tenants WHERE cname = @cname AND u_token = @u_token";
 
             DbParameter[] parameters = {
                 db.GetNewParameter("cname", System.Data.DbType.String, uname),
@@ -212,7 +205,7 @@ namespace ExpressBase.Security
             EbDataTable dt = db.DoQuery(sql, parameters);
 
             if (dt.Rows.Count != 0)
-                _user = new User(Convert.ToInt32(dt.Rows[0][0]), uname, dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString());
+                _user = new User(Convert.ToInt32(dt.Rows[0][0]), uname, dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(),null,null);
 
             return _user;
         }
@@ -222,9 +215,9 @@ namespace ExpressBase.Security
           //  string MD5Pass = (pass + uname).ToMD5Hash();
 
             string sql = @"UPDATE eb_users SET loginattempts = loginattempts + 1 WHERE email = @uname AND pwd = @pass;
-                           SELECT * FROM eb_authenticateuser(@uname,@pass);";
+                           SELECT * FROM eb_authenticateuser(@uname,@pass,@social);";
 
-            DbParameter[] parameters = { df.GetNewParameter("@uname", DbType.String, uname), df.GetNewParameter("@pass", DbType.String, pass) };
+            DbParameter[] parameters = { df.GetNewParameter("@uname", DbType.String, uname), df.GetNewParameter("@pass", DbType.String, pass), df.GetNewParameter("@social", DbType.String, string.Empty) };
             var ds = df.DoQuery(sql, parameters);
 
             User _user = null;
