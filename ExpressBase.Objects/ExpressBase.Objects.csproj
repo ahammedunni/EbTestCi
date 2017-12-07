@@ -9,8 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExpressBase.Common\ExpressBase.Common.csproj" />
     <ProjectReference Include="..\ExpressBase.Security\ExpressBase.Security.csproj" />
   </ItemGroup>
-
 </Project>
